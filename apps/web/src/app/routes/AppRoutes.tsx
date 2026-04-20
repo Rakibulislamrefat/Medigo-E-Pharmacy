@@ -5,6 +5,7 @@ import { RequireAuth } from "../shell/RequireAuth";
 import { RequireRole } from "../shell/RequireRole";
 import { AdminInventoryPage } from "../../pages/AdminInventoryPage";
 import { AdminOrdersPage } from "../../pages/AdminOrdersPage";
+import { AdminBannersPage } from "../../pages/AdminBannersPage";
 import { CartPage } from "../../pages/CartPage";
 import { CatalogPage } from "../../pages/CatalogPage";
 import { CheckoutPage } from "../../pages/CheckoutPage";
@@ -42,6 +43,7 @@ export function AppRoutes() {
           <Route element={<RequireRole role="admin" />}>
             <Route path="/admin/inventory" element={<AdminInventoryPage />} />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
+            <Route path="/admin/banners" element={<AdminBannersPage />} />
           </Route>
 
           <Route element={<RequireRole role="delivery" />}>

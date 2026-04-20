@@ -578,6 +578,182 @@ a:hover {
   font-size: 12px;
 }
 
+.homeCarouselHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 10px;
+}
+
+.homeCarouselTitle {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.homeCarousel {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.homeCarouselTrack {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.homeCarouselCard {
+  flex: 0 0 220px;
+  scroll-snap-align: start;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(248, 250, 252, 0.7);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.homeCarouselMedia {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.homeCarouselImg {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.homeCarouselBody {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.homeCarouselName {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.homeCarouselName:hover {
+  text-decoration: underline;
+}
+
+.homeCarouselMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.homeCarouselPrice {
+  font-weight: 900;
+}
+
+.homeCarouselStockIn {
+  font-size: 12px;
+  font-weight: 900;
+  color: #166534;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.homeCarouselStockOut {
+  font-size: 12px;
+  font-weight: 900;
+  color: #991b1b;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.homeCarouselAdd {
+  height: 40px;
+  border-radius: 12px;
+  border: 0;
+  background: #0b5e8e;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.homeCarouselAddDisabled {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.8);
+  color: rgba(71, 85, 105, 0.9);
+  font-weight: 900;
+}
+
+.homePicksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.homePickCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(248, 250, 252, 0.7);
+  text-align: left;
+  cursor: pointer;
+}
+
+.homePickCard:hover {
+  background: rgba(248, 250, 252, 0.9);
+}
+
+.homePickMeta {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.homePickPrice {
+  font-weight: 900;
+}
+
+.homePickStockIn {
+  font-size: 12px;
+  font-weight: 900;
+  color: #166534;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.homePickStockOut {
+  font-size: 12px;
+  font-weight: 900;
+  color: #991b1b;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
 .homeSupportRow {
   display: flex;
   justify-content: space-between;
@@ -603,11 +779,19 @@ a:hover {
   .homeFloatCart {
     right: 10px;
   }
+
+  .homePicksGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {
   .appHeaderSearch {
     display: none;
+  }
+
+  .homePicksGrid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -944,6 +1128,50 @@ a:hover {
 
 .muted {
   color: var(--muted);
+}
+
+.errorBanner {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.08);
+  color: #991b1b;
+  font-weight: 800;
+}
+
+.bannerPreview {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(248, 250, 252, 0.6);
+}
+
+.bannerPreviewImg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  display: block;
+}
+
+.bannerThumbCell {
+  display: flex;
+  align-items: center;
+}
+
+.bannerThumbLink {
+  display: inline-flex;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.7);
+}
+
+.bannerThumb {
+  width: 120px;
+  height: 54px;
+  object-fit: cover;
+  display: block;
 }
 
 .emptyState {

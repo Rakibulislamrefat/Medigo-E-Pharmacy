@@ -1,13 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ClipboardList, FileUp, MessageCircle, Search, Stethoscope } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import heroImg from "../../assets/hero.png";
+import banner1 from "../../assets/banners/banner-1.svg";
+import banner2 from "../../assets/banners/banner-2.svg";
+import banner3 from "../../assets/banners/banner-3.svg";
 import { useCartStore } from "../cart/cartStore";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { HeroSlider } from "./HeroSlider";
+import { getHome } from "./homeApi";
+import type { Medicine } from "../../types/domain";
+import { demoMedicines } from "../catalog/demoMedicines";
+import { ProductCarousel } from "./ProductCarousel";
 
 type FeatureCategory = {
   title: string;
@@ -29,11 +36,63 @@ const FEATURE_CATEGORIES: FeatureCategory[] = [
 export function HomeScreen() {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
+  const [homeLoading, setHomeLoading] = useState(true);
+  const [banners, setBanners] = useState<{ id: string; imageSrc: string; imageAlt: string; title: string; subtitle: string }[]>([]);
+  const [categories, setCategories] = useState<FeatureCategory[]>(FEATURE_CATEGORIES);
+  const [featured, setFeatured] = useState<Medicine[]>([]);
   const cartItems = useCartStore((s) => s.totalItems());
   const cartSubtotal = useCartStore((s) => s.subtotal());
 
   const query = useMemo(() => q.trim(), [q]);
   const bdt = useMemo(() => `৳ ${Math.round(cartSubtotal)}`, [cartSubtotal]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function run() {
+      setHomeLoading(true);
+      const data = await getHome();
+      if (!mounted) return;
+
+      const bannerImages = [banner1, banner2, banner3];
+      if (data?.banners?.length) {
+        setBanners(
+          data.banners.map((b, i) => ({
+            id: b.key || `b${i + 1}`,
+            imageSrc: b.imageUrl || bannerImages[i % bannerImages.length] || heroImg,
+            imageAlt: "",
+            title: b.title,
+            subtitle: b.subtitle,
+          }))
+        );
+      } else {
+        setBanners([
+          { id: "b1", imageSrc: banner1, imageAlt: "", title: "Medigo‑EPharmacy", subtitle: "Search medicines fast" },
+          { id: "b2", imageSrc: banner2, imageAlt: "", title: "Home delivery in hours", subtitle: "Refill & prescription upload" },
+          { id: "b3", imageSrc: banner3, imageAlt: "", title: "Vitamins, personal care & more", subtitle: "Browse categories and deals" },
+        ]);
+      }
+
+      if (data?.categories?.length) {
+        const palette: FeatureCategory["color"][] = ["mint", "pink", "sky", "amber"];
+        const mapped = data.categories.slice(0, 12).map((c, idx) => ({
+          title: c,
+          subtitle: "Browse items",
+          color: palette[idx % palette.length]!,
+        }));
+        setCategories(mapped.length ? mapped : FEATURE_CATEGORIES);
+      } else {
+        setCategories(FEATURE_CATEGORIES);
+      }
+
+      const featuredList = Array.isArray(data?.featuredMedicines) ? data!.featuredMedicines.slice(0, 18) : [];
+      setFeatured(featuredList.length ? featuredList : demoMedicines.slice(0, 18));
+      setHomeLoading(false);
+    }
+    run();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <>
@@ -41,31 +100,7 @@ export function HomeScreen() {
         <div className="homeHeroGrid">
           <div className="homePromo">
             <div className="homePromoMedia">
-              <HeroSlider
-                slides={[
-                  {
-                    id: "s1",
-                    imageSrc: heroImg,
-                    imageAlt: "",
-                    title: "Everything that your skin needs, nothing it doesn’t.",
-                    subtitle: "gentle cleansing & extra TLC",
-                  },
-                  {
-                    id: "s2",
-                    imageSrc: heroImg,
-                    imageAlt: "",
-                    title: "Order medicines fast with home delivery.",
-                    subtitle: "trusted e‑pharmacy experience",
-                  },
-                  {
-                    id: "s3",
-                    imageSrc: heroImg,
-                    imageAlt: "",
-                    title: "Search. Add to cart. Checkout.",
-                    subtitle: "simple shopping flow",
-                  },
-                ]}
-              />
+              <HeroSlider slides={banners} />
             </div>
 
             <div className="homePromoContent">
@@ -178,7 +213,7 @@ export function HomeScreen() {
         </div>
 
         <div className="homeCategoryRow" role="list">
-          {FEATURE_CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <button
               key={c.title}
               type="button"
@@ -191,24 +226,9 @@ export function HomeScreen() {
           ))}
         </div>
 
-        <Card title="Popular picks" right={<Button variant="secondary" onClick={() => navigate("/medicines")}>Shop now</Button>}>
-          <div className="grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-            <div className="homePick">
-              <div className="homePickTitle">Centrum</div>
-              <div className="homePickSub">Vitamins & Supplements</div>
-            </div>
-            <div className="homePick">
-              <div className="homePickTitle">Accu‑Chek</div>
-              <div className="homePickSub">Diabetic Care</div>
-            </div>
-            <div className="homePick">
-              <div className="homePickTitle">i‑pill</div>
-              <div className="homePickSub">Women Care</div>
-            </div>
-          </div>
+        <ProductCarousel title={homeLoading ? "Featured products" : "Featured products"} items={featured} onOpen={(id) => navigate(`/medicines/${id}`)} />
 
-          <div className="divider" />
-
+        <Card title="Need help?" right={<Button variant="primary" onClick={() => navigate("/medicines")}>Start shopping</Button>}>
           <div className="homeSupportRow">
             <div className="homeSupportLeft">
               <MessageCircle size={18} />
@@ -217,7 +237,6 @@ export function HomeScreen() {
                 <div className="muted">Search by brand/name or browse categories.</div>
               </div>
             </div>
-            <Button variant="primary" onClick={() => navigate("/medicines")}>Start shopping</Button>
           </div>
         </Card>
       </section>

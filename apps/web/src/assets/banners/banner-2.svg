@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EFF6FF"/>
+      <stop offset="0.55" stop-color="#FDF2F8"/>
+      <stop offset="1" stop-color="#ECFEFF"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0B5E8E"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="700" fill="url(#g2)"/>
+  <path d="M0 520 C 260 430, 460 680, 720 590 C 980 500, 1160 590, 1600 460 L1600 700 L0 700 Z" fill="#0EA5E9" opacity="0.10"/>
+  <path d="M0 560 C 260 470, 470 710, 760 620 C 1050 530, 1230 640, 1600 520 L1600 700 L0 700 Z" fill="#22C55E" opacity="0.08"/>
+  <g transform="translate(120,150)">
+    <text x="0" y="0" fill="#0F172A" font-size="54" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="900">
+      Home delivery in hours
+    </text>
+    <text x="0" y="62" fill="#334155" font-size="26" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="700">
+      Track your order • Easy refill • Upload prescription
+    </text>
+    <g transform="translate(0,120)">
+      <rect x="0" y="0" width="280" height="56" rx="16" fill="url(#b)"/>
+      <text x="24" y="36" fill="#FFFFFF" font-size="18" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="800">
+        Shop medicines
+      </text>
+      <rect x="300" y="0" width="260" height="56" rx="16" fill="#111827" opacity="0.92"/>
+      <text x="324" y="36" fill="#FFFFFF" font-size="18" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="800">
+        Upload prescription
+      </text>
+    </g>
+  </g>
+  <g transform="translate(980,160)">
+    <rect x="0" y="0" width="460" height="420" rx="28" fill="#FFFFFF" opacity="0.92" stroke="#CBD5E1"/>
+    <g transform="translate(40,52)">
+      <rect x="0" y="0" width="140" height="44" rx="14" fill="#DBEAFE"/>
+      <rect x="170" y="0" width="210" height="44" rx="14" fill="#DCFCE7"/>
+      <rect x="0" y="72" width="380" height="140" rx="22" fill="#FDF2F8"/>
+      <rect x="0" y="236" width="380" height="140" rx="22" fill="#ECFEFF"/>
+      <circle cx="46" cy="120" r="22" fill="#0EA5E9" opacity="0.25"/>
+      <circle cx="46" cy="284" r="22" fill="#22C55E" opacity="0.20"/>
+      <rect x="86" y="104" width="250" height="16" rx="8" fill="#0B5E8E" opacity="0.35"/>
+      <rect x="86" y="132" width="200" height="16" rx="8" fill="#0EA5E9" opacity="0.22"/>
+      <rect x="86" y="268" width="250" height="16" rx="8" fill="#166534" opacity="0.30"/>
+      <rect x="86" y="296" width="200" height="16" rx="8" fill="#22C55E" opacity="0.18"/>
+    </g>
+  </g>
+</svg>
+

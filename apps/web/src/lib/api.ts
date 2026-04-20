@@ -19,6 +19,10 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   getJson: fetchJson,
+  postJson: <T>(path: string, body: unknown) =>
+    fetchJson<T>(path, { method: "POST", body: JSON.stringify(body) }),
+  patchJson: <T>(path: string, body: unknown) =>
+    fetchJson<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
+  deleteJson: <T>(path: string) => fetchJson<T>(path, { method: "DELETE" }),
   health: () => fetchJson<{ ok: boolean }>("/health"),
 };
-

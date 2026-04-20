@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E0F2FE"/>
+      <stop offset="0.55" stop-color="#DCFCE7"/>
+      <stop offset="1" stop-color="#EFF6FF"/>
+    </linearGradient>
+    <linearGradient id="p1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22C55E"/>
+      <stop offset="1" stop-color="#16A34A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="700" fill="url(#g1)"/>
+  <circle cx="1220" cy="210" r="190" fill="#0EA5E9" opacity="0.12"/>
+  <circle cx="1300" cy="520" r="260" fill="#22C55E" opacity="0.10"/>
+  <g transform="translate(110,130)">
+    <text x="0" y="0" fill="#0F172A" font-size="56" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="800">
+      Medigo‑EPharmacy
+    </text>
+    <text x="0" y="58" fill="#166534" font-size="28" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="700">
+      Fast delivery • Genuine medicine • Best price
+    </text>
+    <g transform="translate(0,110)">
+      <rect x="0" y="0" width="520" height="64" rx="18" fill="#FFFFFF" opacity="0.9" stroke="#CBD5E1"/>
+      <circle cx="480" cy="32" r="22" fill="url(#p1)"/>
+      <path d="M475 32a8 8 0 1 1 16 0a8 8 0 0 1-16 0Zm15 15-7-7" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      <text x="24" y="40" fill="#64748B" font-size="18" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="600">
+        Search Medicine / ঔষধ খুঁজুন
+      </text>
+    </g>
+  </g>
+  <g transform="translate(960,210)">
+    <rect x="0" y="0" width="220" height="360" rx="26" fill="#FFFFFF" opacity="0.92" stroke="#CBD5E1"/>
+    <rect x="28" y="34" width="164" height="46" rx="14" fill="#DCFCE7"/>
+    <rect x="28" y="104" width="164" height="186" rx="18" fill="#E0F2FE"/>
+    <rect x="28" y="308" width="120" height="28" rx="10" fill="#DBEAFE"/>
+    <rect x="260" y="36" width="240" height="160" rx="22" fill="#FFFFFF" opacity="0.9" stroke="#CBD5E1"/>
+    <rect x="260" y="220" width="240" height="160" rx="22" fill="#FFFFFF" opacity="0.9" stroke="#CBD5E1"/>
+    <rect x="290" y="70" width="180" height="18" rx="9" fill="#0EA5E9" opacity="0.35"/>
+    <rect x="290" y="102" width="140" height="18" rx="9" fill="#22C55E" opacity="0.35"/>
+    <rect x="290" y="254" width="180" height="18" rx="9" fill="#F59E0B" opacity="0.35"/>
+    <rect x="290" y="286" width="140" height="18" rx="9" fill="#0EA5E9" opacity="0.25"/>
+  </g>
+</svg>
+

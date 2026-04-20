@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useApiHealth } from "../../features/system/useApiHealth";
 import { useAuthStore } from "../../features/auth/authStore";
 import { useCartStore } from "../../features/cart/cartStore";
+import { useHomeCategories } from "../../features/home/useHomeCategories";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import { Container } from "../../components/layout/Container";
@@ -36,6 +37,17 @@ export function AppShell() {
 
   const query = useMemo(() => q.trim(), [q]);
   const bdt = useMemo(() => `৳ ${Math.round(cartSubtotal)}`, [cartSubtotal]);
+  const categories = useHomeCategories([
+    "Personal Care",
+    "Baby & Mom",
+    "Health Accessories",
+    "Sexual Wellbeing",
+    "Medicines",
+    "Diabetic Care",
+    "Women Care",
+    "Vitamins & Supplements",
+    "Vital Wellness",
+  ]);
 
   const showNav = !["/login", "/register"].includes(location.pathname);
 
@@ -86,7 +98,10 @@ export function AppShell() {
                     <HeaderNavLink to="/orders" label="Orders" icon={<ClipboardList size={18} />} />
                     <HeaderNavLink to="/feedback" label="Feedback" icon={<Star size={18} />} />
                     {user.role === "admin" ? (
-                      <HeaderNavLink to="/admin/inventory" label="Admin" icon={<UserCog size={18} />} />
+                      <HeaderNavLink to="/admin/inventory" label="Inventory" icon={<UserCog size={18} />} />
+                    ) : null}
+                    {user.role === "admin" ? (
+                      <HeaderNavLink to="/admin/banners" label="Banners" icon={<UserCog size={18} />} />
                     ) : null}
                     {user.role === "delivery" ? (
                       <HeaderNavLink to="/delivery" label="Delivery" icon={<Truck size={18} />} />
@@ -132,17 +147,7 @@ export function AppShell() {
 
           {showNav ? (
             <nav className="categoryBar" aria-label="Categories">
-              {[
-                "Personal Care",
-                "Baby & Mom",
-                "Health Accessories",
-                "Sexual Wellbeing",
-                "Medicines",
-                "Diabetic Care",
-                "Women Care",
-                "Vitamins & Supplements",
-                "Vital Wellness",
-              ].map((c) => (
+              {categories.map((c) => (
                 <button
                   key={c}
                   type="button"
