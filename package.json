@@ -1,0 +1,14 @@
+{
+  "name": "medigo-epharmacy",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm.cmd --workspace apps/web run dev",
+    "dev:api": "npm.cmd --workspace apps/api run dev"
+  }
+}
+
