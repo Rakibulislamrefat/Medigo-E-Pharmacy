@@ -8,7 +8,7 @@ export function createApp() {
   app.use(express.json());
 
   app.get("/health", (_req, res) => {
-    res.json({ ok: true });
+    res.json({ ok: "health is good" });
   });
 
   return app;
