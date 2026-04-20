@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "../auth/authStore";
 import { useCartStore } from "../cart/cartStore";
-import { useOrdersStore } from "../orders/ordersStore";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Field } from "../../components/ui/Field";
 import { Input } from "../../components/ui/Input";
 import { formatBdt } from "../../lib/money";
+import { isValidBangladeshiPhone } from "../../lib/validation";
+import { createOrder } from "../orders/ordersApi";
 
 export function CheckoutScreen() {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const cart = useCartStore();
-  const createOrder = useOrdersStore((s) => s.create);
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,26 +24,34 @@ export function CheckoutScreen() {
   const [submitting, setSubmitting] = useState(false);
 
   const subtotal = cart.subtotal();
-  const deliveryFee = cart.items.length ? 1.5 : 0;
+  const deliveryFee = cart.items.length ? 60 : 0;
   const total = subtotal + deliveryFee;
 
   const isValid = useMemo(() => {
     if (!cart.items.length) return false;
-    return Boolean(fullName.trim() && phone.trim() && line1.trim() && city.trim() && postalCode.trim());
+    return Boolean(
+      fullName.trim() &&
+        isValidBangladeshiPhone(phone) &&
+        line1.trim() &&
+        city.trim() &&
+        postalCode.trim()
+    );
   }, [cart.items.length, fullName, phone, line1, city, postalCode]);
 
   async function onSubmit() {
     if (!user || !isValid) return;
     setSubmitting(true);
-    const order = createOrder({
-      userEmail: user.email,
-      items: cart.items.map((i) => ({ ...i })),
-      address: { fullName, phone, line1, city, postalCode },
-      totalAmount: total,
-    });
-    cart.clear();
-    setSubmitting(false);
-    navigate(`/orders/${order.id}`);
+    try {
+      const order = await createOrder({
+        userEmail: user.email,
+        items: cart.items.map((i) => ({ ...i })),
+        address: { fullName, phone, line1, city, postalCode },
+      });
+      cart.clear();
+      navigate(`/orders/${order.id}`);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -53,7 +61,11 @@ export function CheckoutScreen() {
           <Field label="Full name">
             <Input value={fullName} onChange={setFullName} placeholder="Your name" />
           </Field>
-          <Field label="Phone">
+          <Field
+            label="Phone"
+            hint="Format: 01XXXXXXXXX"
+            error={phone.trim() && !isValidBangladeshiPhone(phone) ? "Invalid phone number. Use 01[3-9]XXXXXXXX." : undefined}
+          >
             <Input value={phone} onChange={setPhone} placeholder="Phone number" type="tel" />
           </Field>
           <div style={{ gridColumn: "1 / -1" }}>
@@ -73,7 +85,7 @@ export function CheckoutScreen() {
         <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <div className="strong">Payment</div>
-            <div className="muted">This demo places the order locally. Hook payment later.</div>
+            <div className="muted">This demo places the order via the API. Hook payment later.</div>
           </div>
           <Button disabled={!isValid || submitting} onClick={onSubmit}>
             {submitting ? "Placing…" : "Place order"}
@@ -89,7 +101,7 @@ export function CheckoutScreen() {
           </div>
           <div className="summaryRow">
             <span className="muted">Delivery</span>
-            <span>{formatBdt(items.length ? 60 : 0)}</span>
+            <span>{formatBdt(deliveryFee)}</span>
           </div>
           <div className="summaryRow summaryTotal">
             <span>Total</span>

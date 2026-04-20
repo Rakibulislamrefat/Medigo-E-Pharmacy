@@ -55,3 +55,34 @@ export type Feedback = {
   createdAt: string;
 };
 
+export type PrescriptionRequest = {
+  id: string;
+  userEmail: string | null;
+  fullName: string;
+  phone: string;
+  fileName: string;
+  fileMime: string;
+  fileSize: number;
+  status: "submitted" | "reviewed" | "fulfilled" | "rejected";
+  createdAt: string;
+};
+
+export type RefillRequest = {
+  id: string;
+  userEmail: string | null;
+  phone: string;
+  text: string;
+  status: "submitted" | "processed" | "rejected";
+  createdAt: string;
+};
+
+export type ConsultationRequest = {
+  id: string;
+  userEmail: string | null;
+  fullName: string;
+  phone: string;
+  notes: string;
+  preferredTime: string | null;
+  status: "requested" | "scheduled" | "completed" | "cancelled";
+  createdAt: string;
+};

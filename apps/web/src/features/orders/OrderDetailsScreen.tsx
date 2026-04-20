@@ -1,18 +1,48 @@
 import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { useAuthStore } from "../auth/authStore";
-import { useOrdersStore } from "./ordersStore";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { formatBdt } from "../../lib/money";
+import type { Order } from "../../types/domain";
+import { getOrder, updateOrder } from "./ordersApi";
 
 export function OrderDetailsScreen() {
   const params = useParams();
   const user = useAuthStore((s) => s.user);
-  const order = useOrdersStore((s) => s.orders).find((o) => o.id === params.id);
-  const setStatus = useOrdersStore((s) => s.setStatus);
-  const setPaymentStatus = useOrdersStore((s) => s.setPaymentStatus);
+  const [order, setOrder] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    async function run() {
+      const id = params.id ?? "";
+      if (!id) return;
+      setLoading(true);
+      try {
+        const data = await getOrder(id);
+        if (mounted) setOrder(data);
+      } catch {
+        if (mounted) setOrder(null);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+    run();
+    return () => {
+      mounted = false;
+    };
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <Card title="Order">
+        <div className="emptyState">Loading…</div>
+      </Card>
+    );
+  }
 
   if (!order || order.userEmail !== user?.email) {
     return (
@@ -59,16 +89,40 @@ export function OrderDetailsScreen() {
         <div className="divider" />
 
         <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>
-          <Button variant="secondary" onClick={() => setPaymentStatus(order.id, "paid")}>
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              const next = await updateOrder(order.id, { paymentStatus: "paid" });
+              setOrder(next);
+            }}
+          >
             Mark paid
           </Button>
-          <Button variant="secondary" onClick={() => setStatus(order.id, "packed")}>
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              const next = await updateOrder(order.id, { status: "packed" });
+              setOrder(next);
+            }}
+          >
             Mark packed
           </Button>
-          <Button variant="secondary" onClick={() => setStatus(order.id, "shipped")}>
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              const next = await updateOrder(order.id, { status: "shipped" });
+              setOrder(next);
+            }}
+          >
             Mark shipped
           </Button>
-          <Button variant="secondary" onClick={() => setStatus(order.id, "delivered")}>
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              const next = await updateOrder(order.id, { status: "delivered" });
+              setOrder(next);
+            }}
+          >
             Mark delivered
           </Button>
         </div>
