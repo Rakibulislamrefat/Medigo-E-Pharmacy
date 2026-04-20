@@ -22,6 +22,7 @@ consultationRouter.get("/", async (req, res) => {
       phone: d.phone,
       notes: d.notes,
       preferredTime: d.preferredTime ?? null,
+      scheduledTime: d.scheduledTime ?? null,
       status: d.status,
       createdAt: d.createdAt,
     }))
@@ -34,6 +35,7 @@ consultationRouter.post("/", async (req, res) => {
   const phone = typeof req.body?.phone === "string" ? req.body.phone.trim() : "";
   const notes = typeof req.body?.notes === "string" ? req.body.notes.trim() : "";
   const preferredTime = typeof req.body?.preferredTime === "string" ? req.body.preferredTime.trim() : "";
+  const scheduledTime = typeof req.body?.scheduledTime === "string" ? req.body.scheduledTime.trim() : "";
 
   if (!fullName || !phone || !notes) {
     res.status(400).json({ message: "fullName, phone, notes are required" });
@@ -51,6 +53,7 @@ consultationRouter.post("/", async (req, res) => {
     phone,
     notes,
     preferredTime: preferredTime || undefined,
+    scheduledTime: scheduledTime || undefined,
     status: "requested",
   });
 
@@ -61,6 +64,7 @@ consultationRouter.post("/", async (req, res) => {
     phone: doc.phone,
     notes: doc.notes,
     preferredTime: doc.preferredTime ?? null,
+    scheduledTime: doc.scheduledTime ?? null,
     status: doc.status,
     createdAt: doc.createdAt,
   });
@@ -72,6 +76,7 @@ consultationRouter.patch("/:id", async (req, res) => {
     const s = req.body.status as ConsultationStatus;
     if (["requested", "scheduled", "completed", "cancelled"].includes(s)) patch.status = s;
   }
+  if (typeof req.body?.scheduledTime === "string") patch.scheduledTime = req.body.scheduledTime.trim();
 
   const doc = await ConsultationModel.findByIdAndUpdate(req.params.id, patch, { new: true }).lean();
   if (!doc) {
@@ -86,8 +91,8 @@ consultationRouter.patch("/:id", async (req, res) => {
     phone: doc.phone,
     notes: doc.notes,
     preferredTime: doc.preferredTime ?? null,
+    scheduledTime: doc.scheduledTime ?? null,
     status: doc.status,
     createdAt: doc.createdAt,
   });
 });
-

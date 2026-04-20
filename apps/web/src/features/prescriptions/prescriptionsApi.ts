@@ -13,3 +13,10 @@ export function createPrescription(input: {
   return api.postJson<PrescriptionRequest>("/prescriptions", input);
 }
 
+export function listPrescriptions() {
+  return api.getJson<PrescriptionRequest[]>("/prescriptions");
+}
+
+export function updatePrescription(id: string, patch: Partial<Pick<PrescriptionRequest, "status">>) {
+  return api.patchJson<PrescriptionRequest>(`/prescriptions/${encodeURIComponent(id)}`, patch);
+}

@@ -83,6 +83,7 @@ export type ConsultationRequest = {
   phone: string;
   notes: string;
   preferredTime: string | null;
+  scheduledTime?: string | null;
   status: "requested" | "scheduled" | "completed" | "cancelled";
   createdAt: string;
 };

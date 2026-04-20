@@ -8,6 +8,7 @@ export type ConsultationDoc = {
   phone: string;
   notes: string;
   preferredTime?: string;
+  scheduledTime?: string;
   status: ConsultationStatus;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +21,7 @@ const consultationSchema = new mongoose.Schema<ConsultationDoc>(
     phone: { type: String, required: true, trim: true },
     notes: { type: String, required: true, trim: true },
     preferredTime: { type: String, trim: true },
+    scheduledTime: { type: String, trim: true },
     status: { type: String, required: true, default: "requested" },
   },
   { timestamps: true }
@@ -28,4 +30,3 @@ const consultationSchema = new mongoose.Schema<ConsultationDoc>(
 export const ConsultationModel =
   (mongoose.models.Consultation as mongoose.Model<ConsultationDoc>) ||
   mongoose.model<ConsultationDoc>("Consultation", consultationSchema);
-

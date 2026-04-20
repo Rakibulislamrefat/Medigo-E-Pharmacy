@@ -103,6 +103,15 @@ export function AppShell() {
                     {user.role === "admin" ? (
                       <HeaderNavLink to="/admin/banners" label="Banners" icon={<UserCog size={18} />} />
                     ) : null}
+                    {user.role === "admin" ? (
+                      <HeaderNavLink to="/admin/prescriptions" label="Rx" icon={<UserCog size={18} />} />
+                    ) : null}
+                    {user.role === "admin" ? (
+                      <HeaderNavLink to="/admin/refill-requests" label="Refill" icon={<UserCog size={18} />} />
+                    ) : null}
+                    {user.role === "admin" ? (
+                      <HeaderNavLink to="/admin/consultations" label="Consult" icon={<UserCog size={18} />} />
+                    ) : null}
                     {user.role === "delivery" ? (
                       <HeaderNavLink to="/delivery" label="Delivery" icon={<Truck size={18} />} />
                     ) : null}

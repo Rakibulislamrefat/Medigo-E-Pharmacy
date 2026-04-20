@@ -3,9 +3,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AppShell } from "../shell/AppShell";
 import { RequireAuth } from "../shell/RequireAuth";
 import { RequireRole } from "../shell/RequireRole";
+import { AdminConsultationsPage } from "../../pages/AdminConsultationsPage";
 import { AdminInventoryPage } from "../../pages/AdminInventoryPage";
 import { AdminOrdersPage } from "../../pages/AdminOrdersPage";
 import { AdminBannersPage } from "../../pages/AdminBannersPage";
+import { AdminPrescriptionsPage } from "../../pages/AdminPrescriptionsPage";
+import { AdminRefillRequestsPage } from "../../pages/AdminRefillRequestsPage";
 import { CartPage } from "../../pages/CartPage";
 import { CatalogPage } from "../../pages/CatalogPage";
 import { CheckoutPage } from "../../pages/CheckoutPage";
@@ -50,6 +53,9 @@ export function AppRoutes() {
             <Route path="/admin/inventory" element={<AdminInventoryPage />} />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
             <Route path="/admin/banners" element={<AdminBannersPage />} />
+            <Route path="/admin/prescriptions" element={<AdminPrescriptionsPage />} />
+            <Route path="/admin/refill-requests" element={<AdminRefillRequestsPage />} />
+            <Route path="/admin/consultations" element={<AdminConsultationsPage />} />
           </Route>
 
           <Route element={<RequireRole role="delivery" />}>
