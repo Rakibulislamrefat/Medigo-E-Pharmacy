@@ -15,6 +15,8 @@ import { getHome } from "./homeApi";
 import type { Medicine } from "../../types/domain";
 import { demoMedicines } from "../catalog/demoMedicines";
 import { ProductCarousel } from "./ProductCarousel";
+import { HomeHowItWorks } from "./HomeHowItWorks";
+import { HomeFaq } from "./HomeFaq";
 
 type FeatureCategory = {
   title: string;
@@ -153,7 +155,7 @@ export function HomeScreen() {
                 <div className="homeServiceText">
                   Video/audio 24 hours. Schedule an appointment now.
                 </div>
-                <Button variant="primary" onClick={() => {}}>
+                <Button variant="primary" onClick={() => navigate("/doctor-consultation")}>
                   Doctor Consultation
                 </Button>
               </div>
@@ -166,7 +168,7 @@ export function HomeScreen() {
               <div className="homeServiceBody">
                 <div className="homeServiceTitle">Refill Request</div>
                 <div className="homeServiceText">Need to order the same products or medicine.</div>
-                <Button variant="primary" onClick={() => {}}>
+                <Button variant="primary" onClick={() => navigate("/refill-request")}>
                   Refill Request
                 </Button>
               </div>
@@ -181,7 +183,7 @@ export function HomeScreen() {
                 <div className="homeServiceText">
                   Upload prescriptions and get your medicine at your doorstep.
                 </div>
-                <Button variant="primary" onClick={() => {}}>
+                <Button variant="primary" onClick={() => navigate("/prescription-upload")}>
                   Upload Prescription
                 </Button>
               </div>
@@ -201,6 +203,25 @@ export function HomeScreen() {
       </div>
 
       <section>
+        <div className="homeQuickActions">
+          <button type="button" className="homeQuickAction" onClick={() => navigate("/doctor-consultation")}>
+            <div className="homeQuickTitle">Doctor consultation</div>
+            <div className="homeQuickSub">Book video/audio appointment</div>
+          </button>
+          <button type="button" className="homeQuickAction" onClick={() => navigate("/refill-request")}>
+            <div className="homeQuickTitle">Refill request</div>
+            <div className="homeQuickSub">Reorder quickly from a note</div>
+          </button>
+          <button type="button" className="homeQuickAction" onClick={() => navigate("/prescription-upload")}>
+            <div className="homeQuickTitle">Upload prescription</div>
+            <div className="homeQuickSub">Send a photo/PDF</div>
+          </button>
+          <button type="button" className="homeQuickAction" onClick={() => navigate("/track-order")}>
+            <div className="homeQuickTitle">Track order</div>
+            <div className="homeQuickSub">Check delivery status</div>
+          </button>
+        </div>
+
         <div className="pageHeader">
           <div>
             <h2 className="pageTitle" style={{ fontSize: 22 }}>
@@ -227,6 +248,9 @@ export function HomeScreen() {
         </div>
 
         <ProductCarousel title={homeLoading ? "Featured products" : "Featured products"} items={featured} onOpen={(id) => navigate(`/medicines/${id}`)} />
+
+        <HomeHowItWorks />
+        <HomeFaq />
 
         <Card title="Need help?" right={<Button variant="primary" onClick={() => navigate("/medicines")}>Start shopping</Button>}>
           <div className="homeSupportRow">

@@ -8,10 +8,7 @@ import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Field } from "../../components/ui/Field";
 import { Input } from "../../components/ui/Input";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
+import { formatBdt } from "../../lib/money";
 
 export function CheckoutScreen() {
   const navigate = useNavigate();
@@ -88,19 +85,18 @@ export function CheckoutScreen() {
         <div className="summary">
           <div className="summaryRow">
             <span className="muted">Subtotal</span>
-            <span>{money(subtotal)}</span>
+            <span>{formatBdt(subtotal)}</span>
           </div>
           <div className="summaryRow">
             <span className="muted">Delivery</span>
-            <span>{money(deliveryFee)}</span>
+            <span>{formatBdt(items.length ? 60 : 0)}</span>
           </div>
           <div className="summaryRow summaryTotal">
             <span>Total</span>
-            <span>{money(total)}</span>
+            <span>{formatBdt(total)}</span>
           </div>
         </div>
       </Card>
     </div>
   );
 }
-

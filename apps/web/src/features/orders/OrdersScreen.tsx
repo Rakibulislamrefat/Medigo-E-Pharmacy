@@ -4,10 +4,7 @@ import { useAuthStore } from "../auth/authStore";
 import { useOrdersStore } from "./ordersStore";
 import { Badge } from "../../components/ui/Badge";
 import { Card } from "../../components/ui/Card";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
+import { formatBdt } from "../../lib/money";
 
 export function OrdersScreen() {
   const user = useAuthStore((s) => s.user);
@@ -30,7 +27,7 @@ export function OrdersScreen() {
             <div key={o.id} className="tableRow">
               <div>{new Date(o.createdAt).toLocaleString()}</div>
               <div>{o.items.length}</div>
-              <div className="right">{money(o.totalAmount)}</div>
+              <div className="right">{formatBdt(o.totalAmount)}</div>
               <div>
                 <Badge tone={o.status === "delivered" ? "success" : o.status === "created" ? "neutral" : "warning"}>
                   {o.status}
@@ -46,4 +43,3 @@ export function OrdersScreen() {
     </Card>
   );
 }
-

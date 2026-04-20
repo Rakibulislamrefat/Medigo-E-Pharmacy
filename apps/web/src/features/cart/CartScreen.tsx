@@ -5,10 +5,7 @@ import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Field } from "../../components/ui/Field";
 import { Input } from "../../components/ui/Input";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
+import { formatBdt } from "../../lib/money";
 
 export function CartScreen() {
   const navigate = useNavigate();
@@ -22,7 +19,7 @@ export function CartScreen() {
       <Card title="Your cart">
         {items.length === 0 ? (
           <div className="emptyState">
-            Your cart is empty. <Link to="/">Browse medicines</Link>
+            Your cart is empty. <Link to="/medicines">Browse medicines</Link>
           </div>
         ) : (
           <div className="table">
@@ -39,13 +36,13 @@ export function CartScreen() {
                   <div className="strong">{i.name}</div>
                   <div className="muted">#{i.medicineId}</div>
                 </div>
-                <div className="right">{money(i.unitPrice)}</div>
+                <div className="right">{formatBdt(i.unitPrice)}</div>
                 <div className="right">
                   <Field label="" >
                     <Input value={String(i.qty)} onChange={(v) => setQty(i.medicineId, Number(v))} type="number" />
                   </Field>
                 </div>
-                <div className="right">{money(i.unitPrice * i.qty)}</div>
+                <div className="right">{formatBdt(i.unitPrice * i.qty)}</div>
                 <div className="right">
                   <Button variant="ghost" onClick={() => remove(i.medicineId)}>
                     Remove
@@ -61,15 +58,15 @@ export function CartScreen() {
         <div className="summary">
           <div className="summaryRow">
             <span className="muted">Subtotal</span>
-            <span>{money(subtotal)}</span>
+            <span>{formatBdt(subtotal)}</span>
           </div>
           <div className="summaryRow">
             <span className="muted">Delivery</span>
-            <span>{money(items.length ? 1.5 : 0)}</span>
+            <span>{formatBdt(items.length ? 60 : 0)}</span>
           </div>
           <div className="summaryRow summaryTotal">
             <span>Total</span>
-            <span>{money(subtotal + (items.length ? 1.5 : 0))}</span>
+            <span>{formatBdt(subtotal + (items.length ? 60 : 0))}</span>
           </div>
           <Button disabled={items.length === 0} onClick={() => navigate("/checkout")}> 
             Proceed to checkout
@@ -79,4 +76,3 @@ export function CartScreen() {
     </div>
   );
 }
-

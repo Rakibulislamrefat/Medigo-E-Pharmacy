@@ -11,6 +11,7 @@ import { CatalogPage } from "../../pages/CatalogPage";
 import { CheckoutPage } from "../../pages/CheckoutPage";
 import { DeliveryDetailsPage } from "../../pages/DeliveryDetailsPage";
 import { DeliveryListPage } from "../../pages/DeliveryListPage";
+import { DoctorConsultationPage } from "../../pages/DoctorConsultationPage";
 import { FeedbackPage } from "../../pages/FeedbackPage";
 import { HomePage } from "../../pages/HomePage";
 import { LoginPage } from "../../pages/LoginPage";
@@ -18,6 +19,8 @@ import { MedicineDetailsPage } from "../../pages/MedicineDetailsPage";
 import { NotFoundPage } from "../../pages/NotFoundPage";
 import { OrderDetailsPage } from "../../pages/OrderDetailsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
+import { PrescriptionUploadPage } from "../../pages/PrescriptionUploadPage";
+import { RefillRequestPage } from "../../pages/RefillRequestPage";
 import { RegisterPage } from "../../pages/RegisterPage";
 import { TrackOrderPage } from "../../pages/TrackOrderPage";
 
@@ -30,6 +33,9 @@ export function AppRoutes() {
       <Route element={<AppShell />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/track-order" element={<TrackOrderPage />} />
+        <Route path="/doctor-consultation" element={<DoctorConsultationPage />} />
+        <Route path="/refill-request" element={<RefillRequestPage />} />
+        <Route path="/prescription-upload" element={<PrescriptionUploadPage />} />
         <Route path="/medicines" element={<CatalogPage />} />
         <Route path="/medicines/:id" element={<MedicineDetailsPage />} />
         <Route path="/cart" element={<CartPage />} />

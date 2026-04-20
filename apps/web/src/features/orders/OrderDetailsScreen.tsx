@@ -5,10 +5,7 @@ import { useOrdersStore } from "./ordersStore";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
+import { formatBdt } from "../../lib/money";
 
 export function OrderDetailsScreen() {
   const params = useParams();
@@ -52,9 +49,9 @@ export function OrderDetailsScreen() {
           {order.items.map((i) => (
             <div key={i.medicineId} className="tableRow">
               <div className="strong">{i.name}</div>
-              <div className="right">{money(i.unitPrice)}</div>
+              <div className="right">{formatBdt(i.unitPrice)}</div>
               <div className="right">{i.qty}</div>
-              <div className="right">{money(i.unitPrice * i.qty)}</div>
+              <div className="right">{formatBdt(i.unitPrice * i.qty)}</div>
             </div>
           ))}
         </div>
@@ -108,11 +105,10 @@ export function OrderDetailsScreen() {
           <div className="divider" />
           <div className="summaryRow summaryTotal">
             <span>Total</span>
-            <span>{money(order.totalAmount)}</span>
+            <span>{formatBdt(order.totalAmount)}</span>
           </div>
         </div>
       </Card>
     </div>
   );
 }
-

@@ -12,12 +12,9 @@ import { Input } from "../../components/ui/Input";
 import { Select } from "../../components/ui/Select";
 
 import { listMedicines } from "./catalogApi";
+import { formatBdt } from "../../lib/money";
 
 type Availability = "all" | "in" | "out";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
 
 function uniqueCategories(meds: Medicine[]) {
   const s = new Set<string>();
@@ -154,7 +151,7 @@ export function CatalogScreen() {
                       <span className="dot">•</span>
                       <span>{m.category ?? ""}</span>
                     </div>
-                    <div className="medicinePrice">{money(m.price)}</div>
+                    <div className="medicinePrice">{formatBdt(m.price)}</div>
                   </div>
 
                   <div className="medicineCardActions">

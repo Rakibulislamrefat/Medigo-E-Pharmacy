@@ -8,12 +8,9 @@ import { Button } from "../../components/ui/Button";
 import { Card } from "../../components/ui/Card";
 import { Field } from "../../components/ui/Field";
 import { Input } from "../../components/ui/Input";
+import { formatBdt } from "../../lib/money";
 
 import { getMedicine } from "../catalog/catalogApi";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
 
 export function MedicineDetailsScreen() {
   const params = useParams();
@@ -62,7 +59,7 @@ export function MedicineDetailsScreen() {
             <div className="muted">Category: {item.category ?? "—"}</div>
           </div>
 
-          <div className="detailPrice">{money(item.price)}</div>
+          <div className="detailPrice">{formatBdt(item.price)}</div>
           <p className="detailDesc">{item.description ?? "No description provided."}</p>
 
           <div className="row" style={{ gap: 12, alignItems: "end" }}>
@@ -97,4 +94,3 @@ export function MedicineDetailsScreen() {
     </>
   );
 }
-

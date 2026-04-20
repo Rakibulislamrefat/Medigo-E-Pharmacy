@@ -6,12 +6,9 @@ import { Field } from "../../components/ui/Field";
 import { Input } from "../../components/ui/Input";
 import { Select } from "../../components/ui/Select";
 import { listMedicines } from "../catalog/catalogApi";
+import { formatBdt } from "../../lib/money";
 
 type Sort = "name" | "stock";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
 
 export function AdminInventoryScreen() {
   const [items, setItems] = useState<Medicine[]>([]);
@@ -76,7 +73,7 @@ export function AdminInventoryScreen() {
           <div key={m.id} className={m.stockQty <= 10 ? "tableRow tableRowWarn" : "tableRow"}>
             <div className="strong">{m.name}</div>
             <div className="muted">{m.category ?? "—"}</div>
-            <div className="right">{money(m.price)}</div>
+            <div className="right">{formatBdt(m.price)}</div>
             <div className="right">{m.stockQty}</div>
             <div className="muted">{m.isPublished ? "Yes" : "No"}</div>
           </div>
@@ -86,4 +83,3 @@ export function AdminInventoryScreen() {
     </Card>
   );
 }
-

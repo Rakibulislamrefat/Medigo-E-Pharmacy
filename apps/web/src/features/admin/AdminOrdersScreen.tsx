@@ -1,10 +1,7 @@
 import { useOrdersStore } from "../orders/ordersStore";
 import { Badge } from "../../components/ui/Badge";
 import { Card } from "../../components/ui/Card";
-
-function money(v: number) {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(v);
-}
+import { formatBdt } from "../../lib/money";
 
 export function AdminOrdersScreen() {
   const orders = useOrdersStore((s) => s.orders);
@@ -26,7 +23,7 @@ export function AdminOrdersScreen() {
             <div key={o.id} className="tableRow">
               <div>{new Date(o.createdAt).toLocaleString()}</div>
               <div className="muted">{o.userEmail}</div>
-              <div className="right">{money(o.totalAmount)}</div>
+              <div className="right">{formatBdt(o.totalAmount)}</div>
               <div>
                 <Badge tone={o.status === "delivered" ? "success" : "warning"}>{o.status}</Badge>
               </div>
@@ -40,4 +37,3 @@ export function AdminOrdersScreen() {
     </Card>
   );
 }
-
