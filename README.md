@@ -1,4 +1,4 @@
-# Medigo-E-Pharmacy
+# Medigo-EPharmacy
 
 Monorepo structure:
 
